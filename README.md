@@ -1,19 +1,16 @@
 rserver-manual
 ==============
 
-Manual for R and RStudio Server.
+RStudio Server 中文手册。
 
 ---
-
-
 ## 目录
 
 
 ### R 与 RStudio Server 简介
 
 1. R 与 RStudio IDE 的关系
-2. RStudio Server 是什么？	
-3. 何时适合使用 RStudio Server？
+2. RStudio Server 是什么？
 
 ### 在 RStudio 下使用 R 的基本功能 
 
@@ -32,13 +29,15 @@ Manual for R and RStudio Server.
 3. 
 
 ### 更多高级功能
-...
+（视进度和人手慢慢添加。）
 
 
+---
 
 
+#### 2013-08-23
 
-
+RStudio 的文档更新，增加了基于 Markdown 的 HTML5 幻灯片制作的支持。这项功能非常有用，简直就是作业神器。以前我用过可以基于 Markdown 写作的 HTML5 幻灯片模板，现在有了 RStudio 的支持，不仅可以加入代码和公式，整个流程肯定又被简化很多。
 
 
 
