@@ -17,8 +17,6 @@ RStudio Server 中文手册。
 
 1. 在命令行下工作
 2. 编辑和执行代码
-3. 代码折叠和分段
-4. 浏览代码
 5. 如何使用 Project
 6. 命令历史
 7. 工作目录 （working directories）和工作空间（Workspace）
