@@ -1,9 +1,12 @@
 ## R 与 RStudio Server 简介
 
+#### 概述
+
+在详细介绍 RStudio 之前，我们首先需要理清 R 和 RStudio 的关系。大多数人学习 R 时会自然的将其与之前接触过的软件进行对比，如 SAS、MATLAB 等。但其实这几种软件作为一个“应用程序”来说本身就有很大的不同，用同样的方式来理解它们的运行是不对的。在第一节中，我们将详细讨论 R 究竟是什么，其与我们的主角 RStudio 的关系又是怎样的。
+
+在之前的说明中已经提及，本手册中介绍的 RStudio 都指的是运行在一台远程 Linux 服务器上的 RStudio Server。那么 RStudio Server 究竟是什么？其与桌面版本的关系及其特点将会在第二节中介绍。
 
 ### 1. R 与 RStudio IDE 的关系
-#### 概述
-在详细介绍 RStudio 之前，我们首先需要理清 R 和 RStudio 的关系。大多数人学习 R 时会自然的将其与之前接触过的软件进行对比，如 SAS、MATLAB 等。但其实这几种软件作为一个“应用程序”来说本身就有很大的不同，用同样的方式来理解它们的运行是不对的。在这一节中，我们将详细讨论 R 究竟是什么？其与我们的主角 RStudio 的关系又是怎么样的？
 #### 什么是 R
 > R 是一种免费的用于统计计算和作图的编程语言和软件环境。
 
@@ -41,8 +44,6 @@ RStudio 基本上能够完全替代 R 官方开发的 GUI，并在这之外还�
 ---
 
 ### 2. RStudio Server 是什么
-#### 概述
-在序言中已经提及，本手册中介绍的 RStudio 都指的是运行在一台远程 Linux 服务器上的 RStudio Server。那么 RStudio Server 究竟是什么？
 
 #### RStudio Desktop 与 RStudio Server 有什么区别？
 RStudio Desktop 是一个 R IDE，与您已安装在您的本地 Windows，Mac OS X 或 Linux 工作站上的 R 配合工作。RStudio 桌面版是一个**独立的**桌面应用程序，不需要以任何方式连接到 RStudio 服务器版。

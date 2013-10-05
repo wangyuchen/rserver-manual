@@ -1,7 +1,7 @@
-## 撰写 LaTeX + R 的动态报告
+## 撰写 LaTeX 和 R 的动态报告
 
 ### 1. 使用 Sweave 和 Knitr
-
+#### 概述
 R 包含了一个使用 LaTeX 来制作动态报告和可重复研究的强大系统（Sweave 包）。Sweave 使得 R 代码可以被嵌入在 LaTeX 文档中，并一起被编译为包含有文字叙述、分析、图形、R 代码及其计算结果的 PDF 报告。
 
 Knitr 包在 Sweave 的基础上增加了更多功能，是一个更为强大和全面的系统。而 RStudio 为这两个包的主要功能提供了全面的支持。为了使用 Sweave 或 Knitr，除了 R 和 RStudio 之外，你需要在系统上安装一个 LaTeX 发行版。关于如何安装 LaTeX，可以参考 [LaTeX 项目](http://www.latex-project.org/ftp.html)的页面。
@@ -48,6 +48,8 @@ Sweave 的核心思想是在一个 Sweave 文档内同时撰写报告和 R 代�
 ---
 
 ### 2. 撰写中文 LaTeX 文档
+#### 概述
+
 
 
 

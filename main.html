@@ -1,0 +1,236 @@
+<h2 id="说明"><a href="#说明">说明</a></h2>
+<p>该中文手册的大部分内容翻译自 RStudio IDE 的官方文档[1]，其余内容来自互联网上的相关资料或作者个人的使用建议。</p>
+<p>RStudio IDE 是 RStudio 公司开发的免费且开源的 R 集成开发环境（IDE）。其源代码发布在 GitHub 上，并提供适用于各大平台的桌面和服务器版本供用户下载。桌面版与服务器版的功能基本相同，如无特殊说明，本手册中所指 RStudio 皆为运行于 CentOS 6.3 版本 Linux 系统上的 RStudio IDE 服务器版。</p>
+<p>本手册旨在帮助 R 初学者学习如何使用 RStudio -- 一个强大且高效的 R 图形用户界面（GUI），甚至被称为“宇宙第一”的 R IDE [2]。在 R 的众多 GUI 中，RStudio 下 R 的综合使用体验远超大部分替代者。</p>
+<p>除了利用图形界面简化和完善许多 R 中的基础功能外，RStudio 还提供了许多第三方常用 R 包的图形界面支持。markdown 和 knitr 等包在 RStudio 下的集成度很高，已经完全改变了用户使用这些包的习惯。</p>
+<p>本手册也发布在 GitHub 上。相信随着 R 和 RStudio 的不断发展，新的功能会越来越多。如果您有兴趣帮助完善和更新这份文档，欢迎在 GitHub 上 fork 这个项目 <a href="">rserver-manual</a>。各种评论和修改也可以通过电子邮件 <script type="text/javascript">
+<!--
+h='&#x67;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x63;&#x77;&#x61;&#110;&#x67;&#48;&#x37;&#x31;&#50;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x79;&#x63;&#x77;&#x61;&#110;&#x67;&#48;&#x37;&#x31;&#50;&#32;&#x61;&#116;&#32;&#x67;&#x6d;&#x61;&#x69;&#108;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;</noscript> 联系我们。</p>
+<p>[1] RStudio IDE Documentation <a href="http://www.rstudio.com/ide/docs/">http://www.rstudio.com/ide/docs/</a></p>
+<p>[2][@road2stat](http://weibo.com/road2stat) 的一条微博：<a href="http://weibo.com/2043157342/A4A1s1OPt">http://weibo.com/2043157342/A4A1s1OPt</a> ## R 与 RStudio Server 简介</p>
+<h4 id="概述"><a href="#概述">概述</a></h4>
+<p>在详细介绍 RStudio 之前，我们首先需要理清 R 和 RStudio 的关系。大多数人学习 R 时会自然的将其与之前接触过的软件进行对比，如 SAS、MATLAB 等。但其实这几种软件作为一个“应用程序”来说本身就有很大的不同，用同样的方式来理解它们的运行是不对的。在第一节中，我们将详细讨论 R 究竟是什么，其与我们的主角 RStudio 的关系又是怎样的。</p>
+<p>在之前的说明中已经提及，本手册中介绍的 RStudio 都指的是运行在一台远程 Linux 服务器上的 RStudio Server。那么 RStudio Server 究竟是什么？其与桌面版本的关系及其特点将会在第二节中介绍。</p>
+<h3 id="r-与-rstudio-ide-的关系"><a href="#r-与-rstudio-ide-的关系">1. R 与 RStudio IDE 的关系</a></h3>
+<h4 id="什么是-r"><a href="#什么是-r">什么是 R</a></h4>
+<blockquote>
+<p>R 是一种免费的用于统计计算和作图的编程语言和软件环境。</p>
+</blockquote>
+<p>这个经典的 R 的定义来自 wikipedia, [1] 该定义中的各个名词都常被人拿来指代 R：有人称其为“软件”，有人称其为“语言”，也有人称其为“环境”。[2] 但在这里，我们仅仅从计算机上的一个应用程序的角度来解释什么是 R。</p>
+<h5 id="r-是一种解释型语言"><a href="#r-是一种解释型语言">R 是一种解释型语言</a></h5>
+<p>任何一种语言写出的程序都需要被翻译为机器语言才能被计算机理解并执行，而翻译的方式则分为解释和编译两种。编译型语言写出的程序需要经过编译的过程将代码编译为可执行文件，然后机器即可运行该可执行文件来完成指令。所以编译型语言翻译为机器语言的过程和其执行的过程是异步的。而解释型语言并不需要编译的过程，其代码直接可以被翻译和执行，其翻译和执行是同步的。</p>
+<p>显然对于编译型语言来说，编译的过程决定了代码被如何转化为机器语言，这个过程由该语言的编译器来完成。而对于解释型语言，决定代码如何被翻译的应用程序叫做命令解释器。命令解释器是一个计算机程序，其接受某种语言写就的代码为输入，将其按语言的定义翻译为机器语言后传递给机器执行。R 语言，作为一个应用程序来说，其核心就是这个懂得如何将 R 语言的命令解释给机器执行的命令解释器。</p>
+<h5 id="r-的解释器"><a href="#r-的解释器">R 的解释器</a></h5>
+<p>那 R 的解释器究竟是一个怎样的程序？是不是点开安装好的 R 图标后所打开的就是了？其实并不完全是，这当中还有些小小的区别。R 的解释器是命令行界面（CLI）的，也就是说其输入的代码和输出的提示、警告等都只能是纯文本命令。你点击图标所打开的是其官方默认为其配置的图形界面程序（GUI），该程序除了“引用”了解释器到它主要的窗口中外，还实现了编辑器，图形展示和快捷按钮等功能。一般来说，对于在同一个窗口中提供这些相关功能的 GUI 应用程序，往往被称作集成开发环境（IDE）。</p>
+<p>既然 R 语言的核心在于其解释器，那能否绕开 GUI，直接打开 R 的解释器呢？之前已经知道 R 的解释器是命令行界面的，想打开一个 CLI 程序则需要一个终端--所有 CLI 应用程序的“桌面”。</p>
+<div class="figure">
+<img src="fig/cli.png" />
+</div>
+<p>上图显示，在我的 OS X 上安装了 R 后，我在终端中键入 <code>R</code> 便可以打开 R 的解释器， 输入的 <code>R</code> 是其快捷方式的名称。在这个 CLI 下可以像在任何 GUI 下一样输入 R 语言的命令，这说明了 R 的 GUI 并不是必须的。</p>
+<h5 id="r-的图形界面"><a href="#r-的图形界面">R 的图形界面</a></h5>
+<p>若想更方便的使用 R，把一些常用的命令制作成快捷键是很自然的想法。于是就有了 R 的 GUI。GUI 仅仅是对于 R 的命令提供包装和图形化而已，其本质还是将命令传递给 R 的解释器并执行。一个 GUI 程序，只需提供对 R 语言常用功能的图形化包装即可被称 R 的 GUI，如果包括了解释器、编辑器和图形展示等功能则可被称为 IDE，可见 R 的 GUI （IDE） 并不唯一。</p>
+<h4 id="rstudio-和-r"><a href="#rstudio-和-r">RStudio 和 R</a></h4>
+<p>RStudio 就是一个优秀的 R IDE。其窗口通常被分为四部分，可以人为设定它们的位置和大小。四个窗口提供了命令解释器、代码编辑器等功能，其一般的样子如下图： <img src="http://www.rstudio.com/images/screenshots/rstudio-web.png" /></p>
+<p>RStudio 基本上能够完全替代 R 官方开发的 GUI，并在这之外还有许多优秀的功能，我们将会在之后的章节一一介绍。</p>
+<p>[1] R (programming language) <a href="http://en.wikipedia.org/wiki/R_%28programming_language%29">http://en.wikipedia.org/wiki/R_(programming_language)</a></p>
+<p>[2] lijian 的博客，R语言辨 <a href="http://jliblog.com/archives/8">http://jliblog.com/archives/8</a></p>
+<hr />
+<h3 id="rstudio-server-是什么"><a href="#rstudio-server-是什么">2. RStudio Server 是什么</a></h3>
+<h4 id="rstudio-desktop-与-rstudio-server-有什么区别"><a href="#rstudio-desktop-与-rstudio-server-有什么区别">RStudio Desktop 与 RStudio Server 有什么区别？</a></h4>
+<p>RStudio Desktop 是一个 R IDE，与您已安装在您的本地 Windows，Mac OS X 或 Linux 工作站上的 R 配合工作。RStudio 桌面版是一个<strong>独立的</strong>桌面应用程序，不需要以任何方式连接到 RStudio 服务器版。</p>
+<p>RStudio Server 是一个 Linux 服务器上的应用程序，提供了在服务器上运行的 R 环境，而用户通过浏览器来访问。</p>
+<h4 id="使用-rstudio-server-的好处"><a href="#使用-rstudio-server-的好处">使用 RStudio Server 的好处</a></h4>
+<p>在管理员完成服务器端的配置后，用户可以在网页浏览器中使用 R 和 RStudio。在远程服务器上部署 R 和 RStudio 的好处如下：</p>
+<ul>
+<li>在任何地方，从任何设备（能够浏览互联网的设备，即使是智能手机、平板电脑） 来访问你的 R 工作空间。</li>
+<li>以非常简单的方式和同事或同学共享代码、数据和其他文件。</li>
+<li>使得多用户可以共享服务器上强大的计算资源。</li>
+<li>对管理员来说，中心化的配置和管理 R 、TeX 和各种依赖包，使用户拥有一个统一的开发环境。</li>
+</ul>
+<p>RStudio Server 可以运行在各大发行版的 Linux 服务器上，也可以从源代码编译安装。用户使用符合一定标准的浏览器、并拥有管理员发放的账号和密码即可使用。用户享有独立的存储空间和工作环境，并可以通过 RStudio 自由地使用系统的其他资源。</p>
+<h2 id="在-rstudio-下使用-r-的基本功能"><a href="#在-rstudio-下使用-r-的基本功能">在 RStudio 下使用 R 的基本功能</a></h2>
+<h4 id="概述-1"><a href="#概述-1">概述</a></h4>
+<p>在前一节中已经提及，R 的核心是命令行界面的命令解释器。所有的 R 代码都被输入到解释器中，由其来执行并返回结果。 在 RStudio 中，Console 窗口是四个窗口中唯一一个没有标签页的。也就是说，无论如何你总是需要与 Console 打交道。</p>
+<p>RStudio 的项目（project）功能使得用户很自然地把不同内容的工作区分开来，每个项目有各自的工作目录（working directory）、工作空间（workspace）和源文件。</p>
+<p>继续之后的章节前，我们建议您已经获取或配置了可以使用的最新版本 R + RStudio 环境，不论是服务器版或桌面版均可。本节中所介绍的基本功能均不需要安装任何不随 R 附带的包。</p>
+<h3 id="在-console-中工作"><a href="#在-console-中工作">1. 在 Console 中工作</a></h3>
+<p>RStudio Console 包含了多种功能，目的是为了使与 R 的交互更直接和高效。熟练掌握这些，并辅以 Source 和 History 窗口中的相关功能，可以迅速带来极大的收获，提升你的整体生产力。</p>
+<h4 id="代码补全"><a href="#代码补全">代码补全</a></h4>
+<p>R 默认加载了许多函数，随着分析的深入，你的 workspace 中还会有许多对象。在对于函数名记忆不准确，或对象名太长输入不便时，代码补全功能可以帮助你快速找到和输入当前 workspace 中你想找到的任何对象和函数。</p>
+<p>RStudio 支持以 <strong>Tab</strong> 键来触发命令补全。比如说，在你的 workspace 中有一个叫做 <code>pollResults</code> 的对象，你只需在命令行中输入 <code>poll</code> 并按下 <strong>Tab</strong> 键，RStudio 就会自动帮你补全 <code>pollResults</code>。</p>
+<p>代码补全同时提供函数的简单帮助功能。比如当你输入 <code>sub</code> 并按下 <strong>Tab</strong> 键时，你会看到：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/using_console_completion.png" />
+</div>
+<p>这时，<code>subset</code> 函数的简介和参数接口也会被同时显示出来。</p>
+<p>代码补全也能在函数内使用，提供函数参数的补全和帮助。如果你输入 <code>subset(</code> 并按下 <strong>Tab</strong>，你会看到如下的界面：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/using_console_completion_args.png" />
+</div>
+<p>用上下键选择你需要输入的参数，按回车确认。按 <strong>F1</strong> 则可打开函数的详细帮助页面。</p>
+<p>需要补充的是，未安装或未加载的包的帮助是不会显示的。如果你发现你想找的函数不能自动补全，请先检查你是否已经加载了包含这个函数的包，或已经输入的部分是否有错误（R 是大小写敏感的，大小写输错时也不会自动补全）。</p>
+<h4 id="获取之前的命令"><a href="#获取之前的命令">获取之前的命令</a></h4>
+<p>命令行交互的特点是一次只能输入一条命令（虽然这一条也可以是好几行）。所以大多数时候，我们使用 Console 时是逐行输入的，Console 也在读入一行后立即执行，执行完成后再读入下一行。在这种时候，如果我们可以重新获取之前输入的命令重新执行或加以修改，就可以避免大量的手工输入。</p>
+<p>在 RStudio Console 中，你可以使用键盘的上下键来逐行读取之前输入过的命令。</p>
+<p>如果觉得逐行读取太慢，想要立即找到好几条之前输入的命令，你可以使用 <strong>control + up</strong> 来获得最近输入的命令列表，并直接在列表中选择，如下图：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/using_console_history_popup.png" />
+</div>
+<p>还嫌不够快的话，试试输入想查找的命令的一部分后，再按 <strong>control + up</strong>，可以直接查找输入过的符合这个前缀的命令，如下图：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/using_console_history_search_popup.png" />
+</div>
+<h4 id="console-的标题栏"><a href="#console-的标题栏">Console 的标题栏</a></h4>
+<p>这张截图显示了 Console 窗口的一些其他功能： * 显示当前工作目录 * 在代码的计算时间过长时中止 R。 * 最大/最小化 Console 窗口，同时也会最小/最大化和其摆放在同一侧的另一个窗口。通过点击右上角的图标或双击标题栏均可。</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/using_console_title_bar.png" />
+</div>
+<p>[1] RStudio Documentation, Working in the Console <a href="http://www.rstudio.com/ide/docs/using/console">http://www.rstudio.com/ide/docs/using/console</a></p>
+<hr />
+<h3 id="使用编辑器来编辑和执行代码"><a href="#使用编辑器来编辑和执行代码">2. 使用编辑器来编辑和执行代码</a></h3>
+<h4 id="概述-2"><a href="#概述-2">概述</a></h4>
+<p>RStudio 的 Source 窗口中包括了各种提高生产力的功能，包括语法高亮，代码自动补全（同 Console 中的一致），多文件编辑和查找/替换。</p>
+<p>在编辑器中编辑和执行代码是更多 R 开发者喜爱的方式。在仅仅需要执行几行较短的代码时，可能更多人会选择使用 Console 窗口直接输入。但如果需要编辑并重用很多行代码，甚至将他们组织为一个函数，逐行键入的方式则显得不那么简便，并且 Console 本来也不是为这样的使用方式所设计的。</p>
+<p>RStudio 的文本编辑器可以适用于大部分 R 或与 R 有关的语言写就的代码。根据当前编辑的源文件语言的不同，其上方的工具栏也会显示出不同的功能按钮，满足各个不同语言的需要。熟练掌握编辑器的操作可以极大地提升你的生产力。</p>
+<h4 id="管理多个源文件"><a href="#管理多个源文件">管理多个源文件</a></h4>
+<p>而 Source 窗口就是专门被设计来编辑长段代码的。其上方的标签页设计，可以使得你同时打开多个源文件，并在这些源文件之间切换。如果源文件过多，还可以搜索特定的文件名，见下图：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/source_tabs.png" />
+</div>
+<p>对于 RStudio <strong>File -&gt; New</strong> 菜单下可以新建的各个类型的文本文件，RStudio 都提供代码中关键字的高亮显示（新版本中支持的文件类型已经不止截图中这些了）。有许多类型的文件现在可能还用不到，但大部分都会在将来的章节中介绍。</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/source_new_menu.png" />
+</div>
+<h4 id="提取函数"><a href="#提取函数">提取函数</a></h4>
+<p>RStudio 可以分析某一代码段，并自动将其转换成一个可重复使用的函数。任何在选择的代码内的“自由的”变量，即那些被引用但没有被创建的变量，将被转化为函数的参数：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/source_extract_function.png" />
+</div>
+<p>这种情况在编写某个大型程序中的一小段时非常实用：在编写时，常常会使用一些测试数据集来检查分析的每一步是否正确。而在写完后，将代码中测试数据集的赋值的部分删去，这样剩下的代码段中，原先测试的数据集就变成了“被引用但没有被创建的变量”。接着对这段代码提取函数，即可生成执行这段分析的代码的函数，而原先的测试数据集就变为了函数的参数。</p>
+<h4 id="注释和缩进"><a href="#注释和缩进">注释和缩进</a></h4>
+<p>关于这一部分，Google 的 R Style Guide 中建议了一些编写 R 代码时的良好风格[1]，但也有人争辩说，Google 并不应该被视为 R 的权威[2]。无论如何，良好的编程风格是为了让人更容易读懂你的代码（代码本身就是写给人看的），统一的注释和缩进格式只是一种手段而已。</p>
+<p>在 RStudio 的 Source 窗口中，你可以使用 <strong>Ctrl + Shift + C</strong> 来注释或去除注释。</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/source_comment.png" />
+</div>
+<p>在你编写 R 代码时，RStudio 编辑器会帮助你自动缩进代码，并且在以下情况时会自动重新缩进你的代码：</p>
+<ol style="list-style-type: decimal">
+<li>当新的代码被粘贴进 Source 编辑器时（可在 Code Editing 中设置）。</li>
+<li>当你选择上图中的 Reindent Lines 命令时。</li>
+</ol>
+<h4 id="执行代码"><a href="#执行代码">执行代码</a></h4>
+<p>RStudio 支持在编辑器中直接执行代码：代码将被插入到 Console 窗口中并执行，其结果也将同时显示。</p>
+<h5 id="执行单行代码"><a href="#执行单行代码">执行单行代码</a></h5>
+<p>若想要当前执行当前指针所在的一行代码，你可以按下 <strong>Ctrl + Enter</strong> 键（或使用 Source 窗口标题栏上的 Run 按钮）：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/source_execute_line.png" />
+</div>
+<p>执行完一行后，RStudio 会自动把指针移动到下一行，这样你就可以在手不离开键盘的情况下逐行执行代码段，并查看其运行结果。</p>
+<h5 id="执行多行代码"><a href="#执行多行代码">执行多行代码</a></h5>
+<p>RStudio 支持三种同时执行多行代码的方式：</p>
+<ol style="list-style-type: decimal">
+<li>选择多行代码，按下 <strong>Ctrl + Enter</strong> 键（或使用 Source 窗口标题栏上的 Run 按钮）。</li>
+<li>在运行完某一段代码后，按下 <strong>Ctrl + Shift + P</strong> 键（或对应的标题栏按钮），即可重新运行上一次运行的代码段（单行或多行）。该命令并不是简单的读取执行的历史来重新执行，而是会把当前版本的代码段重新执行（即使和上一次相比已经修改过了）。</li>
+<li>如要执行整个文件，可以按下 <strong>Ctrl + Shift + Enter</strong> 键（或使用标题栏上的 Source 按钮）。这样做的好处是可以整个文档会被保存为一个临时文件，然后输入 Console，在 Console 中的代码不会被重新显示一遍（选择 Source with Echo 则会显示）。</li>
+</ol>
+<h5 id="source-on-save"><a href="#source-on-save">Source on Save</a></h5>
+<p>这是一个较奇怪的选项，但当你掌握它的用法后它其实非常好用。在分析时我们往往有这样两种类型的代码：re-usable functions 和 freestanding lines。通常，我们将固定的方法编写为 re-usable 的函数，而使用 freestanding 的几行 R 代码来整理实际的、千奇百怪的数据，并调用这些函数来分析。</p>
+<p>在这里，这些 re-usable functions 是作为 freestanding lines 的“资源”存在的。 通常这些函数需要一直被加载于工作空间中，以协助主要代码的分析工作。这时，如果更新了这些 re-usable functions 的代码而忘记执行，则工作空间中的函数不会更新，代码执行的结果也无法查看到。</p>
+<p>RStudio 提供这个选项的目的就是建议我们在遇到上述的使用情况时，将那些 re-usable functions 组织在一个单独的文件中，并勾选这个选项。这样这个文件的任何更新，只要一经保存都会直接同步于工作空间中，可供其他代码调用。</p>
+<h4 id="代码折叠和分段"><a href="#代码折叠和分段">代码折叠和分段</a></h4>
+<h5 id="代码折叠"><a href="#代码折叠">代码折叠</a></h5>
+<p>RStudio 支持自动的或用户自定义的代码段折叠。代码折叠使得编辑器窗口更简洁，寻找代码段更迅速。比如在下图中，函数 <code>plot.autoregressive.model</code> 的内容就被折叠了起来：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/codefolding_basic.png" />
+</div>
+<p>点击行号边的小箭头或括号内的箭头图标均可展开这段代码。</p>
+<h5 id="代码分段"><a href="#代码分段">代码分段</a></h5>
+<p>如果代码中更多的是如上图示意的函数等内容，由于其本来就是可折叠的，则并不需要再将代码分段并折叠了。可若是代码大多是以 freestanding lines 的形式存在，则自定义的代码分段和折叠就非常有用。以下的代码已经被分为了三段，其中前两段被折叠了：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/codefolding_sections.png" />
+</div>
+<p>如果你希望新插入一个“代码段”的话，你可以使用 <strong>Code -&gt; Insert Section</strong> 命令。更简单的方法是，任何以四个或以上的 dashes (-), equal signs (=), 或 pound signs (#) 结尾的注释行，都会被视为分段符。比如说如下的三种注释行都会自动生成新的一段：</p>
+<pre><code># Section One ---------------------------------
+
+# Section Two =================================
+
+### Section Three ############################# </code></pre>
+<p>使用下方的导航栏，可以在不同的代码段中快速切换：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/codefolding_jumpto.png" />
+</div>
+<p>这些功能对于较长的代码的编辑和整理非常有用。写注释除了帮助阅读代码的人理解外，常常也就是为了分段的。而现在只需在写注释时加上一些标记，代码就自动被分为了可折叠、可快速导航的段落。</p>
+<p>[1] Google's R Style Guide: <a href="http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml">http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml</a></p>
+<p>[2] Stackoverflow, an answer and its comments to the question: When does it pay off to use S4 methods in R programming? <a href="http://stackoverflow.com/a/3602729">http://stackoverflow.com/a/3602729</a></p>
+<p>[3] RStudio Documentation, Editing and Executing Code <a href="http://www.rstudio.com/ide/docs/using/source">http://www.rstudio.com/ide/docs/using/source</a></p>
+<p>[4] RStudio Documentation, Code Folding and Sections <a href="http://www.rstudio.com/ide/docs/using/code_folding">http://www.rstudio.com/ide/docs/using/code_folding</a></p>
+<hr />
+<h3 id="项目工作目录和工作空间"><a href="#项目工作目录和工作空间">3. 项目、工作目录和工作空间</a></h3>
+<h4 id="概述-3"><a href="#概述-3">概述</a></h4>
+<h4 id="创建项目"><a href="#创建项目">创建项目</a></h4>
+<p>若想要创建一个新的 RStudio 项目，你可以点选菜单项 **Project -&gt;&gt; Create Project **，该选项也可在 RStudio 界面右上方的项目快捷方式中找到。</p>
+<p>你可以从以下三种文件夹来创建一个 RStudio 项目：</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/projects_new.png" />
+</div>
+<p>前两种就是普通的空文件夹，而第三种涉及到版本控制系统（VCS）的特殊文件夹将在之后的章节中详细介绍。</p>
+<p>当一个新的项目被创建后：</p>
+<ol style="list-style-type: decimal">
+<li>RStudio 在项目文件夹中自动创建一个项目文件（以 <code>.Rproj</code> 为后缀名）。这个文件的内容包含了各种项目的设置，也可以被当做在文件系统中直接打开项目的快捷方式。</li>
+<li>RStudio 在项目文件夹中自动创建一个隐藏文件夹（文件夹名为 <code>.Rproj.user</code>）来存放项目临时文件。这个文件夹会被自动添加到 <code>.Rbuildignore</code> 或 <code>.gitignore</code>，这意味着大部分时候这个文件夹可以被忽略。</li>
+<li>创建后，这个项目会被自动加载到当前打开的 RStudio 中。在之前提到的界面右上方的项目快捷菜单中，可以看到显示的项目名。有时你打开了 RStudio， 你会发现编写的代码和存储的数据集不在了，这往往都是由于本来你是在一个项目中工作，而现在这个项目没有正确地被加载。而检查右上角的项目名是最快捷的判断当前加载的项目的方法。</li>
+</ol>
+<h2 id="撰写-latex-和-r-的动态报告"><a href="#撰写-latex-和-r-的动态报告">撰写 LaTeX 和 R 的动态报告</a></h2>
+<h3 id="使用-sweave-和-knitr"><a href="#使用-sweave-和-knitr">1. 使用 Sweave 和 Knitr</a></h3>
+<p>R 包含了一个使用 LaTeX 来制作动态报告和可重复研究的强大系统（Sweave 包）。Sweave 使得 R 代码可以被嵌入在 LaTeX 文档中，并一起被编译为包含有文字叙述、分析、图形、R 代码及其计算结果的 PDF 报告。</p>
+<p>Knitr 包在 Sweave 的基础上增加了更多功能，是一个更为强大和全面的系统。而 RStudio 为这两个包的主要功能提供了全面的支持。为了使用 Sweave 或 Knitr，除了 R 和 RStudio 之外，你需要在系统上安装一个 LaTeX 发行版。关于如何安装 LaTeX，可以参考 <a href="http://www.latex-project.org/ftp.html">LaTeX 项目</a>的页面。</p>
+<p>Sweave 的核心思想是在一个 Sweave 文档内同时撰写报告和 R 代码，并在输出的报告中自动包含代码运行的结果。这样做可以省去在代码和报告中不断来回复制粘贴的过程。所以 Sweave 文档由 LaTeX 和 R 代码“编织（weave/knit）”在一起组成，并使用一些标识符将两者区分。在编译时，Sweave 文档中的 R 代码首先被执行，其结果将会被插入对应代码的下方。这时整个文档中已经不包含未运行的 R 代码，所以 Sweave 文档也变成了普通的 LaTeX 文档。接着只需调用系统中的 LaTeX 编译器将其编译为 PDF 即可。这两个过程是由不同的系统完成的，但在 RStudio 下，用户可以一键完成整个过程。</p>
+<h4 id="创建新的文档"><a href="#创建新的文档">创建新的文档</a></h4>
+<p>当你要创建一个新的 Sweave 文档时，选择菜单中的 <strong>File -&gt;&gt; New -&gt;&gt; R Sweave</strong>。新建的文档中包含了默认的模板，你可以随意的在其中输入文字和 LaTeX 命令。当需要在文档中插入 R 代码块（chunk）时，Sweave 文档的编辑器窗口右上角会有一个特殊的 chunk 菜单，有关 chunk 的操作都可以在这个菜单中找到。</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/sweave_chunk.png" />
+</div>
+<p>你可以用工具栏上的 <strong>Compile PDF</strong> 按钮将整个文档编译为一个 PDF 文件。</p>
+<p>需要注意的是，为了使得这个过程是可重复的，整个文档中的 R 代码会在一个新的 R 环境（非当前的工作空间）中运行。这是为了保证代码每次都会产生同样地结果而不受当前工作空间中已经存在的对象的影响。从这个角度来说，文档是“独立”的，所有文档中需要用到的数据、变量都需要在文档中导入和创建，而不能简单地引用当前工作空间中的对象。这也引出了动态报告的概念 -- 当数据或分析方法变化时，报告只需要重新编译一次即可随之“更新”。</p>
+<h4 id="自定义编译设置"><a href="#自定义编译设置">自定义编译设置</a></h4>
+<h5 id="全局编译设置"><a href="#全局编译设置">全局编译设置</a></h5>
+<p>在 RStudio 中，你可以设置使用什么程序来编译一个 Sweave 文档（后缀名为 <code>.Rnw</code>）。刚才已经介绍过， Rnw 的编译分为两步：首先运行 R 代码并把结果嵌入，然后编译 LaTeX 文档为 PDF 文件。这两步涉及到的程序及其选项都可在 RStudio 的设置菜单中的 Sweave 选项卡中 找到。</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/options_sweave.png" />
+</div>
+<p>其中，“编织” Rnw 文档的工具有 Sweave 和 Knitr 两种，如果选择 Knitr，你需要手动安装 Knitr 包，而 Sweave 是随 R 附带的。</p>
+<p>而 LaTeX 编译选项中，XeLaTeX 可以使用系统字体，相较 pdfLaTeX 更快、更灵活。</p>
+<h5 id="项目编译选项"><a href="#项目编译选项">项目编译选项</a></h5>
+<p>上述设置方法影响的是全局设定，在你不处于任何一个项目内时这些设置才有效。这些设置也影响了你创建一个新项目时编译选项的默认值。如果需要对每个项目设置不同的编译选项，可以在菜单栏或右上角的快捷方式中找到 <strong>Project -&gt;&gt; Project Options</strong>，这里可以设置项目的编译选项。</p>
+<div class="figure">
+<img src="http://www.rstudio.com/images/docs/project_options_sweave.png" />
+</div>
+<h5 id="文件编译设置"><a href="#文件编译设置">文件编译设置</a></h5>
+<p>同时你可以设置每个文件的编译选项，这在处理多个 Rnw 文件，尤其是需要将来自不同合作者的 Rnw 文件组织在一起时非常有用。</p>
+<p>如果需要将某个 Rnw 文件的编译选项设置为 knitr，可以在文件的第一行加入以下代码。</p>
+<pre><code>% !Rnw weave = knitr</code></pre>
+<p>如果想设置为 Sweave，则把对应的 <code>knitr</code> 改为 <code>Sweave</code> 即可。</p>
+<hr />
+<h3 id="撰写中文-latex-文档"><a href="#撰写中文-latex-文档">2. 撰写中文 LaTeX 文档</a></h3>
+<h3 id="处理多个-rnw-文件"><a href="#处理多个-rnw-文件">3. 处理多个 Rnw 文件</a></h3>
+<h1 id="rserver-manual"><a href="#rserver-manual">rserver-manual</a></h1>
+<p>RStudio Server 中文手册。</p>
+<hr />
+<h2 id="section"><a href="#section">2013-08-23</a></h2>
+<p>RStudio 的文档更新，增加了基于 Markdown 的 HTML5 幻灯片制作的支持。这项功能非常有用，简直就是作业神器。以前我用过可以基于 Markdown 写作的 HTML5 幻灯片模板，现在有了 RStudio 的支持，不仅可以加入代码和公式，整个流程肯定又被简化很多。</p>
+<hr />
+<h2 id="tasklist"><a href="#tasklist">Tasklist</a></h2>
+<ul>
+<li>在 RStudio 下使用 R 的基本功能</li>
+<li>项目、工作目录和工作空间</li>
+<li>撰写 LaTeX 和 R 的动态报告</li>
+<li>撰写中文 Rnw 文档</li>
+<li>处理多个 Rnw 文件</li>
+<li>R Markdown</li>
+<li>R Presentation</li>
+<li>VCS</li>
+</ul>
+<hr />
